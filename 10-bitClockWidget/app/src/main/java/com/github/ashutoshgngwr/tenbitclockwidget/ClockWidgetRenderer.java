@@ -80,10 +80,10 @@ class ClockWidgetRenderer {
 		canvas.drawRoundRect(new RectF(0, 0, width, height), px(5), px(5), mPaint);
 
 		RectF bounds = new RectF(padding, padding, sx - sp, height - padding);
-		renderHourBits(onBitColor, offBitColor, bounds, 2, is24Hour ? 3 : 2, nHourBits, hour);
+		renderBits(onBitColor, offBitColor, bounds, 2, is24Hour ? 3 : 2, nHourBits, hour, false);
 
 		bounds.set(sx + sp, padding, width - padding, height - padding);
-		renderMinuteBits(onBitColor, offBitColor, bounds, 2, 3, 6, minute);
+		renderBits(onBitColor, offBitColor, bounds, 2, 3, 6, minute, true);
 
 		if (ClockWidgetSettings.shouldDisplaySeparator()) {
 			mPaint.setColor(onBitColor);
@@ -95,12 +95,14 @@ class ClockWidgetRenderer {
 		return clockBitmap;
 	}
 	@SuppressWarnings("SameParameterValue")
-	private void renderHourBits(int onColor, int offColor, RectF bounds, int rows, int cols, int nBits, int hours) {
+	private void renderBits(int onColor, int offColor, RectF bounds, int rows, int cols, int nBits, int value, boolean isMinutes) {
 		final float dr = px(ClockWidgetSettings.getDotSize());
 		final float cw = bounds.width() / cols;
 		final float ch = bounds.height() / rows;
 		final float cpx = (cw - (dr * 2)) / 2;
 		final float cpy = (ch - (dr * 2)) / 2;
+		final int remMinutes = (value % 15) ;
+		final int quarterHours = (value / 15);
 		float x = bounds.right;
 		float y = bounds.bottom;
 
@@ -109,10 +111,12 @@ class ClockWidgetRenderer {
 				if (--nBits < 0) {
 					continue;
 				}
-				if ((hours >> ((i * cols) + j) & 1) == 1) {
-					mPaint.setColor(onColor);
+				// TODO: make the quarter hour tally configurable
+				// if (isMinutes && tallyQuarterHours) ...
+				if (isMinutes){
+					setMinuteColor(onColor, offColor, cols, quarterHours, remMinutes, i, j);
 				} else {
-					mPaint.setColor(offColor);
+					setColor(onColor, offColor, cols, value, i, j);
 				}
 				canvas.drawCircle(x - cpx - dr, y - cpy - dr, dr, mPaint);
 				x -= cw;
@@ -121,42 +125,21 @@ class ClockWidgetRenderer {
 			y -= ch;
 		}
 	}
-	@SuppressWarnings("SameParameterValue")
-	private void renderMinuteBits(int onColor, int offColor, RectF bounds, int rows, int cols, int nBits, int minutes) {
-		final float dr = px(ClockWidgetSettings.getDotSize());
-		final float cw = bounds.width() / cols;
-		final float ch = bounds.height() / rows;
-		final float cpx = (cw - (dr * 2)) / 2;
-		final float cpy = (ch - (dr * 2)) / 2;
-		final int remMinutes = minutes % 15;
-		final int quarterHours = (minutes / 15) - (remMinutes > 0 ? 0 : 1);
-		float x = bounds.right;
-		float y = bounds.bottom;
 
-		for (int j = 0; j < cols; j++) {
-			for (int i = 0; i < rows; i++) {
-				if (--nBits < 0) {
-					continue;
-				}
-				if (j == cols -1){
-					if ((quarterHours >> i & 1) == 1) {
-						mPaint.setColor(onColor);
-					} else {
-						mPaint.setColor(offColor);
-					}
-				}
-				else {
-					if ((remMinutes >> ((i * (cols -1)) + j) & 1) == 1) {
-						mPaint.setColor(onColor);
-					} else {
-						mPaint.setColor(offColor);
-					}
-				}
-				canvas.drawCircle(x - cpx - dr, y - cpy - dr, dr, mPaint);
-				y -= ch;
-			}
-			y = bounds.bottom;
-			x -= cw;
+	private void setColor(int onColor, int offColor, int cols, int value, int row, int col) {
+		if ((value >> ((row * cols) + col) & 1) == 1) {
+			mPaint.setColor(onColor);
+		} else {
+			mPaint.setColor(offColor);
+		}
+	}
+	private void setMinuteColor(int onColor, int offColor, int cols, int quarterHours, int remMinutes, int row, int col) {
+		if (col == cols -1){
+			// separate grid 1 column wide, zeroth column
+			setColor(onColor, offColor, 1, quarterHours, row, 0);
+		}
+		else {
+			setColor(onColor, offColor, cols -1, remMinutes, row, col);
 		}
 	}
 
