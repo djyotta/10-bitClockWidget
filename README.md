@@ -15,8 +15,8 @@ In my opinion would make the clock more readable at a glance.
 
 <img src="https://raw.githubusercontent.com/djyotta/10-bitClockWidget/master/fastlane/metadata/android/en-US/images/featureGraphicTally.png" title="Widget Information" alt="widget info" width="300"/><br/>
 <img src="https://raw.githubusercontent.com/djyotta/10-bitClockWidget/master/fastlane/metadata/android/en-US/images/featureGraphicTally2.png" title="Widget Information" alt="widget info" width="300"/><br/>
-<img src="https://raw.githubusercontent.com/ashutoshgngwr/10-bitClockWidget/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" title="Screenshot" alt="screenshot" width="200"/>
-<img src="https://raw.githubusercontent.com/ashutoshgngwr/10-bitClockWidget/master/fastlane/metadata/android/en-US/images/sevenInchScreenshots/1_en-US.png" title="Screenshot" alt="screenshot" width="250"/>
+<img src="https://raw.githubusercontent.com/djyotta/10-bitClockWidget/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1Tally_en-US.png" title="Screenshot" alt="screenshot" width="200"/>
+<img src="https://raw.githubusercontent.com/djyotta/10-bitClockWidget/master/fastlane/metadata/android/en-US/images/sevenInchScreenshots/1Tally_en-US.png" title="Screenshot" alt="screenshot" width="250"/>
 
 ## Download
 
