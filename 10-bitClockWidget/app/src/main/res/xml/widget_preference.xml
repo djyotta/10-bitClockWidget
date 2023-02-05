@@ -34,6 +34,13 @@
       app:key="24hour_format"
       app:summary="@string/summary_twenty_four_hour_format"
       app:title="@string/twenty_four_hour_format" />
+    
+    <androidx.preference.CheckBoxPreference
+      app:defaultValue="false"
+      app:iconSpaceReserved="false"
+      app:key="quarter_hour_tally"
+      app:summary="@string/summary_quarter_hour_tally"
+      app:title="@string/quarter_hour_tally" />
 
     <androidx.preference.CheckBoxPreference
       app:defaultValue="false"

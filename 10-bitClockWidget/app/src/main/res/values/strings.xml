@@ -32,6 +32,8 @@
   <string name="clock_background_color">Background color</string>
   <string name="twenty_four_hour_format">Use 24-hour format</string>
   <string name="summary_twenty_four_hour_format">The widget will need at least 11 dots on enabling 24-hour format.</string>
+  <string name="quarter_hour_tally">Display minutes by quarter hour</string>
+  <string name="summary_quarter_hour_tally">The minutes are displayed as number of quarter hours and remaining minutes in current quarter hour.</string>
   <string name="six_bits_hour">Use 6 dots for hour</string>
   <string name="summary_six_bits_hour">To fill empty space, the widget will use 6 dots to represent hour instead of 5.</string>
   <string name="about_page_url">file:///android_asset/about.html</string>

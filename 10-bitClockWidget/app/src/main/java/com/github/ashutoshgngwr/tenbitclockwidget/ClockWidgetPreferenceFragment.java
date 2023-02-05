@@ -81,6 +81,11 @@ public class ClockWidgetPreferenceFragment extends PreferenceFragmentCompat
 		});
 
 		tfHourFormat.callChangeListener(tfHourFormat.isChecked());
+
+		CheckBoxPreference quarterHourTally = findPreference("quarter_hour_tally");
+		assert quarterHourTally != null;
+		quarterHourTally.callChangeListener(quarterHourTally.isChecked());
+
 	}
 
 	// Listening for changes in SharedPreferences to get updated values of ListPreference.

@@ -50,6 +50,10 @@ class ClockWidgetSettings {
 		return getPreferences().getBoolean("6bits_hour", false);
 	}
 
+	static boolean shouldTallyQuarterHours(){
+		return getPreferences().getBoolean("quarter_hour_tally", false);
+	}
+
 	static int getClockAMOnColor() {
 		return getPreferences().getInt("am_color", 0);
 	}

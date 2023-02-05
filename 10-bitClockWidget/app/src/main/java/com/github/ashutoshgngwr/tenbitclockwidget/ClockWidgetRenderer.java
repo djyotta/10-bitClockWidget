@@ -64,6 +64,7 @@ class ClockWidgetRenderer {
 		Calendar calendar = Calendar.getInstance();
 		final boolean is24Hour = ClockWidgetSettings.shouldUse24HourFormat();
 		final int nHourBits = is24Hour ? ClockWidgetSettings.shouldUse6bitsForHour() ? 6 : 5 : 4;
+		final boolean tallyQuarterHours = ClockWidgetSettings.shouldTallyQuarterHours();
 		final int hour = calendar.get(is24Hour ? Calendar.HOUR_OF_DAY : Calendar.HOUR);
 		final int minute = calendar.get(Calendar.MINUTE);
 		final int onBitColor = is24Hour || calendar.get(Calendar.AM_PM) == Calendar.AM
@@ -80,10 +81,10 @@ class ClockWidgetRenderer {
 		canvas.drawRoundRect(new RectF(0, 0, width, height), px(5), px(5), mPaint);
 
 		RectF bounds = new RectF(padding, padding, sx - sp, height - padding);
-		renderBits(onBitColor, offBitColor, bounds, 2, is24Hour ? 3 : 2, nHourBits, hour, false);
+		renderBits(onBitColor, offBitColor, bounds, 2, is24Hour ? 3 : 2, nHourBits, hour, false, false);
 
 		bounds.set(sx + sp, padding, width - padding, height - padding);
-		renderBits(onBitColor, offBitColor, bounds, 2, 3, 6, minute, true);
+		renderBits(onBitColor, offBitColor, bounds, 2, 3, 6, minute, true, tallyQuarterHours);
 
 		if (ClockWidgetSettings.shouldDisplaySeparator()) {
 			mPaint.setColor(onBitColor);
@@ -95,7 +96,7 @@ class ClockWidgetRenderer {
 		return clockBitmap;
 	}
 	@SuppressWarnings("SameParameterValue")
-	private void renderBits(int onColor, int offColor, RectF bounds, int rows, int cols, int nBits, int value, boolean isMinutes) {
+	private void renderBits(int onColor, int offColor, RectF bounds, int rows, int cols, int nBits, int value, boolean isMinutes, boolean tallyQuarterHours) {
 		final float dr = px(ClockWidgetSettings.getDotSize());
 		final float cw = bounds.width() / cols;
 		final float ch = bounds.height() / rows;
@@ -111,9 +112,7 @@ class ClockWidgetRenderer {
 				if (--nBits < 0) {
 					continue;
 				}
-				// TODO: make the quarter hour tally configurable
-				// if (isMinutes && tallyQuarterHours) ...
-				if (isMinutes){
+				if (isMinutes && tallyQuarterHours){
 					setMinuteColor(onColor, offColor, cols, quarterHours, remMinutes, i, j);
 				} else {
 					setColor(onColor, offColor, cols, value, i, j);
